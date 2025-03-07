@@ -164,24 +164,15 @@ socket.on("ai_response", (data) => {
     avatarImage.src = talkingAvatarUrl;
     aiResponse.textContent = `AI: ${data.text}`;
 
-    aiAudio = new Audio("D:\PythonStuffs\ConversationalCompanion_prjct\response.wav");
-    aiAudio.play();
+    if (data.audio_file) {
+        aiAudio = new Audio(data.audio_file);
+        aiAudio.play();
 
-    aiAudio.onended = () => {
-        console.log("Audio has ended")
-        avatarImage.src = neutralAvatarUrl;
-    };
-
-
-    // if (data.audio_file) {
-    //     aiAudio = new Audio("response.mp3");
-    //     aiAudio.play();
-
-    //     aiAudio.onended = () => {
-    //         console.log("Audio has ended")
-    //         avatarImage.src = neutralAvatarUrl;
-    //     };
-    // } else {
-    //     console.error("No audio file received from the server.");
-    // }
+        aiAudio.onended = () => {
+            console.log("Audio has ended")
+            avatarImage.src = neutralAvatarUrl;
+        };
+    } else {
+        console.error("No audio file received from the server.");
+    }
 });
