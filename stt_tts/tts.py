@@ -13,3 +13,5 @@ def text_to_speech(text, filename="response.mp3"):
     # for sentence in sentences:
     #     engine.say(sentence)
     #     engine.runAndWait()
+
+#glenn my boii
