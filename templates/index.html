@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversational Avatar</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css') }}">
+</head>
+<body>
+    <h1>Conversational Avatar</h1>
+    <div id="avatar-container">
+        <img src="{{ url_for('static', filename='neutral.jpeg') }}" id="avatar-image" alt="Avatar">
+    </div>
+    <div id="chat">
+        <div id="user-text" class="text-box user"></div>
+        <div id="ai-response" class="text-box ai"></div>
+    </div>
+    <button id="start-convo-btn" >Start Conversation</button>
+    <button id="speak-btn" disabled>Speak</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const neutralAvatarUrl = "{{ url_for('static', filename='neutral.jpeg') }}";
+        const talkingAvatarUrl = "{{ url_for('static', filename='talking.jpeg') }}";
+    </script>
+</body>
+</html>
