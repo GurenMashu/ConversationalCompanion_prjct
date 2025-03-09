@@ -36,15 +36,86 @@ h1 {
     transition: opacity 0.3s ease; 
 }
 
-#chat {
+
+/* ✅ Chat container styles */
+#chat-container {
+    width: 400px;
+    height: 400px;
+    background-color: #001F3F; 
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.2);
+    overflow-y: auto; /* Enable scrolling */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* ✅ User and AI message styles */
+.user-message, .ai-message {
+    padding: 10px;
+    border-radius: 10px;
+    color: #00CED1;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: #003366;
+    align-self: flex-start;
+    border-left: 5px solid #00CED1;
+}
+
+.ai-message {
+    background-color: #008080;
+    align-self: flex-end;
+    border-left: 5px solid #008080;
+}
+
+/* ✅ Button styles */
+#start-convo-btn, #speak-btn {
+    background-color: #00CED1;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#start-convo-btn:hover, #speak-btn:hover {
+    background-color: #008080;
+}
+
+/* ✅ For scrollbar styling (optional) */
+#chat-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+    background-color: #00CED1;
+    border-radius: 10px;
+}
+
+#chat-container::-webkit-scrollbar-track {
+    background-color: #001F3F;
+}
+
+
+/* #chat {
     width: 400px;
     background-color: #001F3F; 
     border-radius: 15px; 
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 206, 209, 0.2); 
-}
+} */
 
-.text-box {
+
+
+/* .text-box {
     background-color: #003366; 
     border-radius: 10px; 
     padding: 10px;
@@ -74,4 +145,4 @@ h1 {
 
 #start-btn:hover {
     background-color: #008080; 
-}
+} */

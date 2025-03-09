@@ -11,10 +11,14 @@
     <div id="avatar-container">
         <img src="{{ url_for('static', filename='neutral.jpeg') }}" id="avatar-image" alt="Avatar">
     </div>
-    <div id="chat">
+
+    <div id="chat-container">
+    </div>
+
+    <!-- <div id="chat">
         <div id="user-text" class="text-box user"></div>
         <div id="ai-response" class="text-box ai"></div>
-    </div>
+    </div> -->
     <button id="start-convo-btn" >Start Conversation</button>
     <button id="speak-btn" disabled>Speak</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>

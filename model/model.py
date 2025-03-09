@@ -5,6 +5,8 @@ api_key = "AIzaSyDlWIDfJey0yGzUMOO7dEmBh5328a0cqHE"
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
+history=[]
+
 def construct_meta_prompt(user_input, context=None, intent=None):
     meta_prompt = (
         "You are an advanced conversational assistant. Respond with concise, clear, and helpful information. "
@@ -37,30 +39,61 @@ def detect_intent(user_input):
         return "opinion"
     else:
         return None
+    
 
 def get_model_response(user_input, context=None):
-  
+    global history
+
+    # Append user input to history
+    history.append(f"User: {user_input}")
+
+    # Construct the meta prompt (including full conversation history)
+    intent = detect_intent(user_input)
+    meta_prompt = construct_meta_prompt(user_input, context=context, intent=intent)
+
     try:
-      
-        intent = detect_intent(user_input)
+        # Call the model WITHOUT the history argument
+        response = model.generate_content(meta_prompt)
 
-        meta_prompt = construct_meta_prompt(user_input, context=context, intent=intent)
-
-        if context and "history" in context:
-            response = model.generate_content(
-                meta_prompt,
-                history=context["history"]  # Pass conversation history to the API
-            )
-        else:
-            response = model.generate_content(meta_prompt)
-
-        # Update the conversation history
+        # Update conversation history with AI response
         if context:
-            context["history"] = context.get("history", "") + f"User: {user_input}\nAI: {response.text}\n"
-
+            context["history"] = context.get("history", "") + f"User: {user_input}\nAI: {response.text.strip()}\n"
+        
+        history.append(f"AI: {response.text.strip()}")
         return response.text.strip()
     except Exception as e:
         print(f"Error generating response: {e}")
         return "Sorry, I couldn't generate a response."
+
+
+# def get_model_response(user_input, context=None):
+    
+#     global history
+
+#     history.append(f"User: {user_input}")
+
+#     meta_prompt = "\n".join(history) + "\nAI:"
+#     try:
+      
+#         intent = detect_intent(user_input)
+
+#         meta_prompt = construct_meta_prompt(user_input, context=context, intent=intent)
+
+#         if context and "history" in context:
+#             response = model.generate_content(
+#                 meta_prompt,
+#                 history=context["history"]  # Pass conversation history to the API
+#             )
+#         else:
+#             response = model.generate_content(meta_prompt)
+
+#         # Update the conversation history
+#         if context:
+#             context["history"] = context.get("history", "") + f"User: {user_input}\nAI: {response.text}\n"
+
+#         return response.text.strip()
+#     except Exception as e:
+#         print(f"Error generating response: {e}")
+#         return "Sorry, I couldn't generate a response."
 
 

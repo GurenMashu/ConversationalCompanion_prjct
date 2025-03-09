@@ -2,8 +2,9 @@ const socket = io();
 
 const startConvoBtn = document.getElementById("start-convo-btn");
 const speakBtn = document.getElementById("speak-btn");
-const userText = document.getElementById("user-text");
-const aiResponse = document.getElementById("ai-response");
+// const userText = document.getElementById("user-text");
+// const aiResponse = document.getElementById("ai-response");
+const chatContainer = document.getElementById("chat-container"); // Add a chat container
 const avatarImage = document.getElementById("avatar-image");
 
 let mediaRecorder;
@@ -26,6 +27,13 @@ startConvoBtn.addEventListener("click", () => {
         startConvoBtn.textContent = "Start Conversation";
         speakBtn.disabled = true;
         console.log("Conversation ended.");
+
+        // ✅ Clear chat history
+        const chatContainer = document.getElementById("chat-container");
+        chatContainer.innerHTML = "";
+
+        // ✅ Reset history on the server side (optional)
+        socket.emit("clear_history");
     }
 });
 
@@ -159,14 +167,16 @@ function arrayBufferToBase64(buffer) {
 }
 
 socket.on("ai_response", (data) => {
- 
-    userText.textContent = `You: ${data.user_text}`;
-    avatarImage.src = talkingAvatarUrl;
-    aiResponse.textContent = `AI: ${data.text}`;
+    
+    updateChatHistory(data.history)
+    //userText.textContent = `You: ${data.user_text}`;
+    //avatarImage.src = talkingAvatarUrl;
+    //aiResponse.textContent = `AI: ${data.text}`;
 
     if (data.audio_file) {
         aiAudio = new Audio(data.audio_file);
         aiAudio.play();
+        avatarImage.src = talkingAvatarUrl;
 
         aiAudio.onended = () => {
             console.log("Audio has ended")
@@ -176,3 +186,23 @@ socket.on("ai_response", (data) => {
         console.error("No audio file received from the server.");
     }
 });
+
+// Update Chat History in UI
+function updateChatHistory(history) {
+    chatContainer.innerHTML = ""; // Clear existing messages
+
+    history.forEach((entry) => {
+        const userMessage = document.createElement("div");
+        userMessage.classList.add("user-message");
+        userMessage.textContent = `You: ${entry.user}`;
+        chatContainer.appendChild(userMessage);
+
+        const aiMessage = document.createElement("div");
+        aiMessage.classList.add("ai-message");
+        aiMessage.textContent = `AI: ${entry.ai}`;
+        chatContainer.appendChild(aiMessage);
+    });
+
+    // Auto-scroll to the bottom
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
