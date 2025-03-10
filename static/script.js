@@ -63,11 +63,33 @@ socket.on("ai_audio_end", () => {
     avatarImage.src = neutralAvatarUrl;
 });
 
+// Function to simulate typing effect
+function typeText(element, text, delay = 50) {
+    let index = 0;
+    element.textContent = ""; // Clear the text initially
+
+    const typingInterval = setInterval(() => {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+        } else {
+            clearInterval(typingInterval);
+        }
+    }, delay);
+}
+
 // Update Chat History in UI
 function updateChatHistory(history) {
-    chatContainer.innerHTML = ""; // Clear existing messages
+    // Clear only the new messages, not the entire container
+    const existingMessages = chatContainer.querySelectorAll(".user-message, .ai-message");
+    const lastMessage = existingMessages[existingMessages.length - 1];
 
-    history.forEach((entry) => {
+    // If the last message is from the AI, update it instead of adding a new one
+    if (lastMessage && lastMessage.classList.contains("ai-message")) {
+        lastMessage.textContent = `AI: ${history[history.length - 1].ai}`;
+    } else {
+        // Append new messages
+        const entry = history[history.length - 1];
         const userMessage = document.createElement("div");
         userMessage.classList.add("user-message");
         userMessage.textContent = `You: ${entry.user}`;
@@ -77,7 +99,8 @@ function updateChatHistory(history) {
         aiMessage.classList.add("ai-message");
         aiMessage.textContent = `AI: ${entry.ai}`;
         chatContainer.appendChild(aiMessage);
-    });
+        typeText(aiMessage, `AI: ${entry.ai}`); // Simulate typing effect
+    }
 
     // Auto-scroll to the bottom
     chatContainer.scrollTop = chatContainer.scrollHeight;

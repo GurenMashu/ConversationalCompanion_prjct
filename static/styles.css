@@ -18,15 +18,23 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 206, 209, 0.7); /* Glowing effect */
 }
 
 #avatar-container {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     border: 3px solid #00CED1; 
     border-radius: 50%; 
     overflow: hidden;
     margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 206, 209, 0.5); /* Glowing border */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+#avatar-container:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 30px rgba(0, 206, 209, 0.8); /* Enhanced glow on hover */
 }
 
 #avatar-image {
@@ -36,41 +44,92 @@ h1 {
     transition: opacity 0.3s ease; 
 }
 
-
 /* ✅ Chat container styles */
 #chat-container {
-    width: 400px;
-    height: 400px;
+    width: 450px; /* Slightly wider */
+    height: 300px; /* Taller for more messages */
     background-color: #001F3F; 
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.2);
+    border-radius: 20px; /* More rounded corners */
+    padding: 20px; /* More padding */
+    box-shadow: 0 8px 20px rgba(0, 206, 209, 0.4); /* Deeper shadow */
     overflow-y: auto; /* Enable scrolling */
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; /* Increased gap between messages */
     margin-bottom: 20px;
+    border: 2px solid rgba(0, 206, 209, 0.3); /* Subtle border */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+#chat-container:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 12px 25px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
+}
+
+/* Scrollbar styling */
+#chat-container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+#chat-container::-webkit-scrollbar-track {
+    background: rgba(0, 206, 209, 0.1); /* Track color */
+    border-radius: 10px;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 206, 209, 0.5); /* Thumb color */
+    border-radius: 10px;
+}
+
+#chat-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 206, 209, 0.8); /* Thumb color on hover */
 }
 
 /* ✅ User and AI message styles */
 .user-message, .ai-message {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px 16px; /* More padding */
+    border-radius: 15px; /* More rounded corners */
     color: #00CED1;
     max-width: 80%;
     word-wrap: break-word;
+    position: relative; /* For positioning timestamps or icons */
+    animation: fadeIn 0.5s ease; /* Fade-in animation */
 }
 
 .user-message {
-    background-color: #003366;
-    align-self: flex-start;
+    background: linear-gradient(145deg, #0074D9, #005BB5); /* Gradient for user messages */
+    align-self: flex-start; /* Align to the left */
     border-left: 5px solid #00CED1;
+    box-shadow: 0 4px 10px rgba(0, 116, 217, 0.3); /* Shadow for user messages */
 }
 
 .ai-message {
-    background-color: #008080;
+    background: linear-gradient(145deg, #1E8449, #186A3B); /* Darker green gradient */
     align-self: flex-end;
     border-left: 5px solid #008080;
+    box-shadow: 0 4px 10px rgba(46, 204, 64, 0.3);
+    color: #E0F7FA; /* Light cyan text for better contrast */
+}
+
+/* Timestamp for messages (optional) */
+.message-timestamp {
+    font-size: 10px; /* Smaller font size */
+    color: rgba(255, 255, 255, 0.7); /* Semi-transparent text */
+    margin-top: 5px; /* Spacing above the timestamp */
+    display: block; /* Ensure it appears on a new line */
+}
+
+/* Fade-in animation for messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ✅ Button styles */
@@ -79,70 +138,16 @@ h1 {
     color: #000;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Slightly larger padding */
     font-size: 1rem;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.3); /* Shadow for buttons */
 }
 
 #start-convo-btn:hover, #speak-btn:hover {
     background-color: #008080;
+    transform: translateY(-3px); /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
 }
-
-/* ✅ For scrollbar styling (optional) */
-#chat-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-#chat-container::-webkit-scrollbar-thumb {
-    background-color: #00CED1;
-    border-radius: 10px;
-}
-
-#chat-container::-webkit-scrollbar-track {
-    background-color: #001F3F;
-}
-
-
-/* #chat {
-    width: 400px;
-    background-color: #001F3F; 
-    border-radius: 15px; 
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.2); 
-} */
-
-
-
-/* .text-box {
-    background-color: #003366; 
-    border-radius: 10px; 
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #00CED1; 
-}
-
-.text-box.user {
-    border-left: 5px solid #00CED1;
-}
-
-.text-box.ai {
-    border-left: 5px solid #008080; 
-}
-
-#start-btn {
-    background-color: #00CED1; 
-    color: #000; 
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-#start-btn:hover {
-    background-color: #008080; 
-} */
