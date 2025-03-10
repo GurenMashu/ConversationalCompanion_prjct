@@ -1,11 +1,12 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 from stt_tts.stt import listen_to_speech
-from stt_tts.tts import text_to_speech
+from stt_tts.tts import text_to_speech, stop_audio  # Import the new functions
 from model.model import get_model_response
+import time
 
-app=Flask(__name__)
-socketio=SocketIO(app)
+app = Flask(__name__)
+socketio = SocketIO(app)
 
 history = []
 
@@ -15,50 +16,65 @@ def home():
 
 @app.route("/page2")
 def page2():
-    return "Hello wolrd!"
+    return "Hello world!"
 
-@socketio.on("user_input")
-def handle_user_input(data):
+@socketio.on("start_recording")
+def handle_start_recording():
     global history
-    print("recieved user input.")
-    user_text=listen_to_speech(data["audio"])
+    print("Recording started...")
 
+    # Listen to the user's speech
+    user_text = listen_to_speech()
     print(f"User said: {user_text}")
 
-    ai_response=get_model_response(user_text)
-    print(f"Avatar response: {ai_response}")
+    # Append a new entry to history
+    history.append({"user": user_text, "ai": ""})  # Initialize with empty AI response
 
-    # Append to history
-    history.append({"user": user_text, "ai": ai_response})
-
-    audio_file=text_to_speech(ai_response)
-
-    if audio_file:
-     socketio.emit("ai_response", {
+    # Send the user's message to the client
+    socketio.emit("update_chat", {
         "user_text": user_text,
-        "text": ai_response,
-        "audio_file": f"/audio/{audio_file}",
-        "history": history  # Send history to frontend
+        "ai_text": "",
+        "history": history
     })
-    else:
-        socketio.emit("ai_response", {
-        "user_text": user_text,
-        "text": ai_response,
-        "audio_file": None,
-        "history": history  # Send history to frontend
-    })
-    # if audio_file:
-    #     socketio.emit("ai_response", {"user_text":user_text,"text": ai_response, "audio_file": audio_file})
-    # else:
-    #     socketio.emit("ai_response", {"user_text":user_text,"text": ai_response, "audio_file": None})
+
+    # Stream the AI's response
+    ai_response = ""
+
+    complete_response=get_model_response(user_text)
+    socketio.emit("ai_audio")  # Notify client that audio playback is starting
+    text_to_speech(complete_response)  # Start audio playback in a separate thread
+    socketio.emit("ai_audio_end")  # Notify client that audio playback has ended
+    
+    for chunk in get_model_response(user_text):
+        ai_response += chunk
+
+        # Update the last AI message in history
+        if history:  # Ensure history is not empty
+            history[-1]["ai"] = ai_response
+
+        # Send the text chunk to the client
+        socketio.emit("update_chat", {
+            "user_text": user_text,
+            "ai_text": ai_response,
+            "history": history
+        })
+
+        # Simulate a small delay for streaming effect
+        time.sleep(0.1)
+
+    # Generate and play audio for the full response
+    
 
 @socketio.on("clear_history")
 def handle_clear_history():
-    from model.model import history
+    global history
     history.clear()
     print("Chat history cleared.")
 
+@socketio.on("stop_audio")
+def handle_stop_audio():
+    stop_audio()  # Stop audio playback
+    print("Audio playback stopped.")
 
-if __name__=="__main__":
+if __name__ == "__main__":
     socketio.run(app, debug=True)
-
