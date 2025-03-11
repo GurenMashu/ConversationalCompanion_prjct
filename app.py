@@ -45,7 +45,7 @@ def handle_start_recording():
     text_to_speech(complete_response)  # Start audio playback in a separate thread
     socketio.emit("ai_audio_end")  # Notify client that audio playback has ended
     
-    for chunk in get_model_response(user_text):
+    for chunk in complete_response:
         ai_response += chunk
 
         # Update the last AI message in history
@@ -61,6 +61,7 @@ def handle_start_recording():
 
         # Simulate a small delay for streaming effect
         time.sleep(0.1)
+        socketio.emit("ai_audio_end")
 
     # Generate and play audio for the full response
     

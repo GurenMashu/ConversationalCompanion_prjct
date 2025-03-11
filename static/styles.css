@@ -62,6 +62,11 @@ h1 {
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
 }
 
+#chat-container {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
 #chat-container:hover {
     transform: translateY(-5px); /* Slight lift on hover */
     box-shadow: 0 12px 25px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
