@@ -62,24 +62,33 @@ socket.on("ai_audio_end", () => {
 
 // Function to update chat history and auto-scroll
 function updateChatHistory(history) {
-    chatContainer.innerHTML = ""; // Clear chat box before updating
+    const lastEntry = history[history.length - 1]; // Get the latest message
+    if (!lastEntry) return; // Avoid errors if history is empty
 
-    history.forEach(entry => {
+    // Find the last AI message in the chat to update it dynamically
+    const lastAIMessage = chatContainer.querySelector(".ai-message:last-child");
+
+    // If it's a new user message, add it to the chat
+    if (!lastAIMessage || lastAIMessage.previousElementSibling.textContent !== `You: ${lastEntry.user}`) {
         const userMessage = document.createElement("div");
         userMessage.classList.add("user-message");
-        userMessage.textContent = `You: ${entry.user}`;
+        userMessage.textContent = `You: ${lastEntry.user}`;
         chatContainer.appendChild(userMessage);
 
         const aiMessage = document.createElement("div");
         aiMessage.classList.add("ai-message");
+        aiMessage.dataset.index = history.length - 1; // Store message index
         chatContainer.appendChild(aiMessage);
+    }
 
-        typeText(aiMessage, `AI: ${entry.ai}`);
-    });
+    // Update the last AI message dynamically (streaming effect)
+    const lastAI = chatContainer.querySelector(".ai-message:last-child");
+    lastAI.textContent = `AI: ${lastEntry.ai}`;
 
-    // Auto-scroll to the bottom of the chat container
+    // Auto-scroll to the latest message
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
+
 
 // Function to simulate typing effect
 function typeText(element, text, delay = 50) {
