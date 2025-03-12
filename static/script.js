@@ -88,7 +88,7 @@ socket.on("ai_audio", () => {
     mouthAnimationInterval = setInterval(() => {
         avatarImage.src = mouthFrames[frameIndex]; // Set current frame
         frameIndex = (frameIndex + 1) % mouthFrames.length; // Loop through frames
-    }, 150); // Adjust speed (100ms for smooth movement)
+    }, 100); // Adjust speed (100ms for smooth movement)
 });
 
 
