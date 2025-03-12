@@ -6,8 +6,19 @@ const chatContainer = document.getElementById("chat-container");
 const avatarImage = document.getElementById("avatar-image");
 
 // Define avatar image URLs
-const neutralAvatarUrl = "static/neutral.jpeg";
-const talkingAvatarUrl = "static/talking.jpeg";
+//const neutralAvatarUrl = "static/neutral.jpeg";
+//const talkingAvatarUrl = "static/talking.jpeg";
+const neutralAvatarUrl = "static/idealAvatar.png";
+// const mouthOpened01Url = "static/mouthOpened0.1.png"
+// const mouthOpened02Url = "static/mouthOpened0.1.png";
+// const mouthOpened03Url = "static/mouthOpened0.1.png";
+// const mouthOpened04Url = "static/mouthOpened0.1.png";
+// const mouthOpened05Url = "static/mouthOpened0.1.png";
+// const mouthOpened06Url = "static/mouthOpened0.1.png";
+// const mouthOpened07Url = "static/mouthOpened0.1.png";
+// const mouthOpened08Url = "static/mouthOpened0.1.png";
+// const mouthOpened09Url = "static/mouthOpened0.1.png";
+// const mouthOpened1Url = "static/mouthOpenedFully.png";
 
 let isConversationActive = false;
 
@@ -50,13 +61,43 @@ socket.on("update_chat", (data) => {
     updateChatHistory(data.history);
 });
 
+let mouthAnimationInterval = null;
+const mouthFrames = [
+    "static/mouthOpened0.1.png", "static/mouthOpened0.2.png", "static/mouthOpened0.3.png",
+    "static/mouthOpened0.4.png", "static/mouthOpened0.5.png", "static/mouthOpened0.6.png",
+    "static/mouthOpened0.7.png", "static/mouthOpened0.8.png", "static/mouthOpened0.9.png",
+    "static/mouthOpenedFully.png"
+];
+
+let frameIndex = 0;
+
+// **Preload images to avoid flickering**
+const preloadedImages = mouthFrames.map((src) => {
+    const img = new Image();
+    img.src = src;
+    return img;
+});
+
 // Handle AI Audio Playback
 socket.on("ai_audio", () => {
-    avatarImage.src = talkingAvatarUrl;
+    if(mouthAnimationInterval) {
+        clearInterval(mouthAnimationInterval);
+    }
+
+    frameIndex = 0; // Start from first frame
+    mouthAnimationInterval = setInterval(() => {
+        avatarImage.src = mouthFrames[frameIndex]; // Set current frame
+        frameIndex = (frameIndex + 1) % mouthFrames.length; // Loop through frames
+    }, 150); // Adjust speed (100ms for smooth movement)
 });
+
 
 // Handle AI Audio Playback End
 socket.on("ai_audio_end", () => {
+    if (mouthAnimationInterval) {
+        clearInterval(mouthAnimationInterval); // Stop animation
+        mouthAnimationInterval = null;
+    }
     avatarImage.src = neutralAvatarUrl;
 });
 
@@ -104,3 +145,4 @@ function typeText(element, text, delay = 50) {
         }
     }, delay);
 }
+
