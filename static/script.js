@@ -6,19 +6,7 @@ const chatContainer = document.getElementById("chat-container");
 const avatarImage = document.getElementById("avatar-image");
 
 // Define avatar image URLs
-//const neutralAvatarUrl = "static/neutral.jpeg";
-//const talkingAvatarUrl = "static/talking.jpeg";
 const neutralAvatarUrl = "static/idealAvatar.png";
-// const mouthOpened01Url = "static/mouthOpened0.1.png"
-// const mouthOpened02Url = "static/mouthOpened0.1.png";
-// const mouthOpened03Url = "static/mouthOpened0.1.png";
-// const mouthOpened04Url = "static/mouthOpened0.1.png";
-// const mouthOpened05Url = "static/mouthOpened0.1.png";
-// const mouthOpened06Url = "static/mouthOpened0.1.png";
-// const mouthOpened07Url = "static/mouthOpened0.1.png";
-// const mouthOpened08Url = "static/mouthOpened0.1.png";
-// const mouthOpened09Url = "static/mouthOpened0.1.png";
-// const mouthOpened1Url = "static/mouthOpenedFully.png";
 
 let isConversationActive = false;
 
@@ -88,7 +76,7 @@ socket.on("ai_audio", () => {
     mouthAnimationInterval = setInterval(() => {
         avatarImage.src = mouthFrames[frameIndex]; // Set current frame
         frameIndex = (frameIndex + 1) % mouthFrames.length; // Loop through frames
-    }, 150); // Adjust speed (100ms for smooth movement)
+    }, 80); // Adjust speed (100ms for smooth movement)
 });
 
 
@@ -98,7 +86,9 @@ socket.on("ai_audio_end", () => {
         clearInterval(mouthAnimationInterval); // Stop animation
         mouthAnimationInterval = null;
     }
-    avatarImage.src = neutralAvatarUrl;
+    setTimeout(() => {
+        avatarImage.src = neutralAvatarUrl; // Ensure instant reset
+    }, 5);
 });
 
 // Function to update chat history and auto-scroll

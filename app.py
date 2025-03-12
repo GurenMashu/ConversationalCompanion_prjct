@@ -30,43 +30,17 @@ def handle_start_recording():
     # Append a new entry to history
     history.append({"user": user_text, "ai": ""})  # Initialize with empty AI response
 
-    # Send the user's message to the client
-    socketio.emit("update_chat", {
-        "user_text": user_text,
-        "ai_text": "",
-        "history": history
-    })
-
-    # Stream the AI's response
-    #ai_response = ""
 
     complete_response=get_model_response(user_text)
-    socketio.emit("ai_audio")  # Notify client that audio playback is starting
-    audio_thread = text_to_speech(complete_response)
+    history.append({"user": user_text, "ai": complete_response})  # Initialize with empty AI response
 
-    ai_response = ''
-  # Notify client that audio playback has ended
-    
-    for chunk in complete_response:
-        ai_response += chunk
+    socketio.emit("update_chat", {"user_text": user_text, "ai_text": complete_response, "history": history})
 
-        # Update the last AI message in history
-        if history:  # Ensure history is not empty
-            history[-1]["ai"] = ai_response
 
-        # Send the text chunk to the client
-        socketio.emit("update_chat", {
-            "user_text": user_text,
-            "ai_text": ai_response,
-            "history": history
-        })
-
-        # Simulate a small delay for streaming effect
-        time.sleep(0.1)
+    audio_thread = text_to_speech(complete_response,socketio)
     audio_thread.join()
-    socketio.emit("ai_audio_end")
 
-    # Generate and play audio for the full response
+
     
 
 @socketio.on("clear_history")
