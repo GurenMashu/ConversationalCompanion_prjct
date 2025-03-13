@@ -7,8 +7,8 @@ const avatarImage = document.getElementById("avatar-image");
 const maleBtn = document.getElementById("male-btn")
 const femaleBtn = document.getElementById("female-btn")
 
-const neutralMaleAvatar = "static/idealAvatar.png";
-const neutralFemaleAvatar = "static/FemaleAvatarMouthClosed.png"
+const neutralMaleAvatar = "static/assets/idealAvatar.png";
+const neutralFemaleAvatar = "static/assets/FemaleAvatarMouthClosed.png"
 let isConversationActive = false;
 let currentAvatar = 'male'; // Track active avatar
 
@@ -73,17 +73,17 @@ function updateAvatar() {
 
 let mouthAnimationInterval = null;
 const mouthFrames = [
-    "static/mouthOpened0.1.png", "static/mouthOpened0.2.png", "static/mouthOpened0.3.png",
-    "static/mouthOpened0.4.png", "static/mouthOpened0.5.png", "static/mouthOpened0.6.png",
-    "static/mouthOpened0.7.png", "static/mouthOpened0.8.png", "static/mouthOpened0.9.png",
-    "static/mouthOpenedFully.png"
+    "static/assets/mouthOpened0.1.png", "static/assets/mouthOpened0.2.png", "static/assets/mouthOpened0.3.png",
+    "static/assets/mouthOpened0.4.png", "static/assets/mouthOpened0.5.png", "static/assets/mouthOpened0.6.png",
+    "static/assets/mouthOpened0.7.png", "static/assets/mouthOpened0.8.png", "static/assets/mouthOpened0.9.png",
+    "static/assets/mouthOpenedFully.png"
 ];
 
 const mouthFrames2 = [
-    "static/AvatarFemaleMouthopen0.1.png", "static/FemaleAvatarMouthOpen0.2.png", "static/FemaleAvatarMouthOpen0.3.png",
-    "static/FemaleAvatarMouthOpen0.4.png", "static/FemaleAvatarMouthOpen0.5.png", "static/FemaleAvatarMouthOpen0.6.png",
-    "static/FemaleAvatarMouthOpen0.7.png", "static/FemaleAvatarMouthOpen0.8.png", "static/FemaleAvatarMouthOpen0.9.png",
-    "static/FemaleAvatarMouthOpen1.png"
+    "static/assets/AvatarFemaleMouthopen0.1.png", "static/assets/FemaleAvatarMouthOpen0.2.png", "static/assets/FemaleAvatarMouthOpen0.3.png",
+    "static/assets/FemaleAvatarMouthOpen0.4.png", "static/assets/FemaleAvatarMouthOpen0.5.png", "static/assets/FemaleAvatarMouthOpen0.6.png",
+    "static/assets/FemaleAvatarMouthOpen0.7.png", "static/assets/FemaleAvatarMouthOpen0.8.png", "static/assets/FemaleAvatarMouthOpen0.9.png",
+    "static/assets/FemaleAvatarMouthOpen1.png"
 ];
 
 let frameIndex = 0;

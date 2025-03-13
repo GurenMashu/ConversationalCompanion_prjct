@@ -1,3 +1,87 @@
+/* Home Page Styles */
+.home-container {
+    text-align: center;
+    padding: 50px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Main Content Styles */
+main {
+    flex: 1;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.intro-container h2 {
+    font-size: 2rem;
+    color: #00CED1;
+    margin-bottom: 20px;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    color: #00CED1;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Button Container Styles */
+.button-container {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+#start-chat-btn, #explore-btn {
+    background-color: #00CED1;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.3);
+}
+
+#start-chat-btn:hover, #explore-btn:hover {
+    background-color: #008080;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 206, 209, 0.5);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #001F3F;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #00CED1;
+}
+
+.footer-left {
+    font-size: 0.9rem;
+    color: #00CED1;
+}
+
+.footer-right a {
+    text-decoration: none;
+}
+
+.github-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* Make the icon white */
+    transition: transform 0.3s ease;
+}
+
+.github-icon:hover {
+    transform: scale(1.1);
+}
 body {
     font-family: 'Arial', sans-serif;
     background-color: #000;
@@ -19,6 +103,23 @@ h1 {
     letter-spacing: 2px;
     margin-bottom: 20px;
     text-shadow: 0 0 10px rgba(0, 206, 209, 0.7); /* Glowing effect */
+}
+
+/* Header Styles */
+header {
+    background-color: #001F3F;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #00CED1;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00CED1;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
 }
 
 #avatar-container {
