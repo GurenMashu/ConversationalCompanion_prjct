@@ -4,11 +4,14 @@ const startConvoBtn = document.getElementById("start-convo-btn");
 const speakBtn = document.getElementById("speak-btn");
 const chatContainer = document.getElementById("chat-container");
 const avatarImage = document.getElementById("avatar-image");
+const maleBtn = document.getElementById("male-btn")
+const femaleBtn = document.getElementById("female-btn")
 
-// Define avatar image URLs
-const neutralAvatarUrl = "static/idealAvatar.png";
-
+const neutralMaleAvatar = "static/idealAvatar.png";
+const neutralFemaleAvatar = "static/FemaleAvatarMouthClosed.png"
 let isConversationActive = false;
+let currentAvatar = 'male'; // Track active avatar
+
 
 // Handle Start/End Conversation Button Click
 startConvoBtn.addEventListener("click", () => {
@@ -32,8 +35,8 @@ startConvoBtn.addEventListener("click", () => {
         // Stop audio playback
         socket.emit("stop_audio");
 
-        // Reset avatar to neutral state
-        avatarImage.src = neutralAvatarUrl;
+        updateAvatar()
+
     }
 });
 
@@ -49,6 +52,25 @@ socket.on("update_chat", (data) => {
     updateChatHistory(data.history);
 });
 
+
+maleBtn.addEventListener("click", () => {
+    currentAvatar = 'male';
+    updateAvatar();
+});
+
+femaleBtn.addEventListener("click", () => {
+    currentAvatar = 'female';
+    updateAvatar();
+});
+
+function updateAvatar() {
+    if (currentAvatar === 'male') {
+        avatarImage.src = neutralMaleAvatar;
+    } else {
+        avatarImage.src = neutralFemaleAvatar;
+    }
+}
+
 let mouthAnimationInterval = null;
 const mouthFrames = [
     "static/mouthOpened0.1.png", "static/mouthOpened0.2.png", "static/mouthOpened0.3.png",
@@ -57,13 +79,20 @@ const mouthFrames = [
     "static/mouthOpenedFully.png"
 ];
 
+const mouthFrames2 = [
+    "static/AvatarFemaleMouthopen0.1.png", "static/FemaleAvatarMouthOpen0.2.png", "static/FemaleAvatarMouthOpen0.3.png",
+    "static/FemaleAvatarMouthOpen0.4.png", "static/FemaleAvatarMouthOpen0.5.png", "static/FemaleAvatarMouthOpen0.6.png",
+    "static/FemaleAvatarMouthOpen0.7.png", "static/FemaleAvatarMouthOpen0.8.png", "static/FemaleAvatarMouthOpen0.9.png",
+    "static/FemaleAvatarMouthOpen1.png"
+];
+
 let frameIndex = 0;
 
-// **Preload images to avoid flickering**
-const preloadedImages = mouthFrames.map((src) => {
+
+// ✅ Preload All Mouth Frames (Avoid Flickering)
+[...mouthFrames, ...mouthFrames2].forEach((src) => {
     const img = new Image();
     img.src = src;
-    return img;
 });
 
 // Handle AI Audio Playback
@@ -74,9 +103,16 @@ socket.on("ai_audio", () => {
 
     frameIndex = 0; // Start from first frame
     mouthAnimationInterval = setInterval(() => {
+        if (currentAvatar == 'male'){
         avatarImage.src = mouthFrames[frameIndex]; // Set current frame
-        frameIndex = (frameIndex + 1) % mouthFrames.length; // Loop through frames
-    }, 80); // Adjust speed (100ms for smooth movement)
+        frameIndex = (frameIndex + 1) % mouthFrames.length;
+        }
+        else{
+            avatarImage.src = mouthFrames2[frameIndex]; // Set current frame
+            frameIndex = (frameIndex + 1) % mouthFrames2.length;
+
+        } // Loop through frames
+    }, 100); // Adjust speed (100ms for smooth movement)
 });
 
 
@@ -87,7 +123,9 @@ socket.on("ai_audio_end", () => {
         mouthAnimationInterval = null;
     }
     setTimeout(() => {
-        avatarImage.src = neutralAvatarUrl; // Ensure instant reset
+      
+        updateAvatar()
+        // Ensure instant reset
     }, 5);
 });
 

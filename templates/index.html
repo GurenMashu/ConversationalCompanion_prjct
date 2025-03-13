@@ -8,23 +8,20 @@
 </head>
 <body>
     <h1>Conversational Avatar</h1>
-    <div id="avatar-container">
-        <img src="{{ url_for('static', filename='idealAvatar.png') }}" id="avatar-image" alt="Avatar">
-    </div>
 
+    <div class="avatar-wrapper">
+        <button id="male-btn" class="switch-btn left-btn">Male Avatar</button>
+        <div id="avatar-container">
+            <img id="avatar-image" src="/static/avatar_idle.png" alt="Avatar">
+        </div>
+        <button id="female-btn" class="switch-btn right-btn">Female Avatar</button>
+    </div>
+    
+    
     <div id="chat-container">
     </div>
 
-    <select id="avatar-select">
-    <option value="male">Male Avatar</option>
-    <option value="female">Female Avatar</option>
-</select>
 
-
-    <!-- <div id="chat">
-        <div id="user-text" class="text-box user"></div>
-        <div id="ai-response" class="text-box ai"></div>
-    </div> -->
     <button id="start-convo-btn" >Start Conversation</button>
     <button id="speak-btn" disabled>Speak</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
