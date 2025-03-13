@@ -40,7 +40,7 @@ h1 {
 #avatar-image {
     width: 100%;
     height: 100%;
-    object-fit:cover;
+    object-fit:contain;
     transition: opacity 0.3s ease; 
 }
 
@@ -155,4 +155,57 @@ h1 {
     background-color: #008080;
     transform: translateY(-3px); /* Slight lift on hover */
     box-shadow: 0 6px 15px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
+}
+
+
+/* ✅ Styling for Switch Buttons */
+.switch-btn {
+    position: relative; /* Change from absolute to relative */
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #000;
+    background-color: #00CED1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switch-btn:hover {
+    background-color: #008080;
+    transform: scale(1.1);
+}
+
+/* Position the buttons on either side of the avatar container */
+.left-btn {
+    left: -50px;
+}
+
+.right-btn {
+    right: -50px;
+}
+
+/* ✅ Responsive Design Fix */
+@media (max-width: 600px) {
+    .left-btn {
+        left: 10px;
+    }
+
+    .right-btn {
+        right: 10px;
+    }
+
+    #avatar-container {
+        width: 250px;
+        height: 250px;
+    }
 }
