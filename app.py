@@ -12,11 +12,15 @@ history = []
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
 
-@app.route("/page2")
-def page2():
-    return "Hello world!"
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
+
+@app.route("/pdf_chat")
+def pdf_chat():
+    return render_template("pdf_chat.html")
 
 @socketio.on("start_recording")
 def handle_start_recording():
@@ -38,10 +42,7 @@ def handle_start_recording():
 
 
     audio_thread = text_to_speech(complete_response,socketio)
-    audio_thread.join()
-
-
-    
+    audio_thread.join()  
 
 @socketio.on("clear_history")
 def handle_clear_history():
