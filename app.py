@@ -27,12 +27,13 @@ def handle_start_recording():
     global history
     print("Recording started...")
 
+    stop_audio()
     # Listen to the user's speech
     user_text = listen_to_speech()
     print(f"User said: {user_text}")
 
     # Append a new entry to history
-    history.append({"user": user_text, "ai": ""})  # Initialize with empty AI response
+    #history.append({"user": user_text, "ai": ""})  # Initialize with empty AI response
 
 
     complete_response=get_model_response(user_text)
@@ -48,6 +49,8 @@ def handle_start_recording():
 def handle_clear_history():
     global history
     history.clear()
+    from model.model import clear_history
+    clear_history()
     print("Chat history cleared.")
 
 @socketio.on("stop_audio")

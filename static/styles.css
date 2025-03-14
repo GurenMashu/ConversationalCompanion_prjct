@@ -55,6 +55,7 @@ main {
 
 /* Footer Styles */
 footer {
+    width: 100%;
     background-color: #001F3F;
     padding: 15px 20px;
     display: flex;
@@ -73,9 +74,10 @@ footer {
 }
 
 .github-icon {
-    width: 24px;
-    height: 24px;
-    filter: invert(1); /* Make the icon white */
+    width: 32px;
+    height: 32px;
+    margin-left: 30px;
+    /*filter: invert(1); /* Make the icon white */
     transition: transform 0.3s ease;
 }
 
@@ -148,7 +150,7 @@ header h1 {
 /* ✅ Chat container styles */
 #chat-container {
     width: 450px; /* Slightly wider */
-    height: 300px; /* Taller for more messages */
+    height: 400px; /* Taller for more messages */
     background-color: #001F3F; 
     border-radius: 20px; /* More rounded corners */
     padding: 20px; /* More padding */

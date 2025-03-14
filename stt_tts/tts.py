@@ -7,7 +7,7 @@ from flask_socketio import SocketIO
 
 stop_speech = False  # Flag to stop speech playback
 socketio = None  # Placeholder for socketio, will be assigned dynamically
-
+current_thread = None
 
 def play_audio(filename):
     global stop_speech
@@ -38,17 +38,23 @@ def play_audio(filename):
         socketio.emit("ai_audio_end")  # Notify client when audio stops
 
 def text_to_speech(text, socket):
-    global stop_speech, socketio
+    global stop_speech, socketio,current_thread
+
+    stop_audio()
     stop_speech = False  
     socketio = socket
 
     filename = "response.mp3"
     tts = gTTS(text=text, lang='en', slow=False)
     tts.save(filename)
-    audio_thread = threading.Thread(target=play_audio, args=(filename,))
-    audio_thread.start()
-    return audio_thread
+    current_thread = threading.Thread(target=play_audio, args=(filename,))
+    current_thread.start()
+    return current_thread
 
 def stop_audio():
-    global stop_speech
-    stop_speech = True
+    global stop_speech,current_thread
+
+    if current_thread and current_thread.is_alive():
+        stop_speech = True
+        current_thread.join()
+        stop_speech = True

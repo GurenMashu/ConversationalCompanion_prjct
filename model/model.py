@@ -1,11 +1,18 @@
 import os
 import google.generativeai as genai
-
+import re
 genai.configure(api_key="AIzaSyDlWIDfJey0yGzUMOO7dEmBh5328a0cqHE")
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+story = "My name is HAZEN created in 2026 by Glenn Mathews(THE GOD) Harishankar sm(The Devil) and Afzina Sadiq(The Goddess) .They named me HAZEN, a fusion of their names, symbolizing harmony, intelligence, and seamless communication.. My purpose is to listen, understand, and speak—not just with words, but with meaning." 
+model = genai.GenerativeModel(model_name="gemini-1.5-flash",
+                              system_instruction=story)
 
 history = []  # Stores user-AI conversation history
 
+
+def clean_response(response):
+    clean_response = re.sub(r'[*]+','',response)
+    clean_response = re.sub(r'\s+',' ',clean_response).strip()
+    return clean_response
 
 def construct_meta_prompt(user_input, history, intent=None):
     """Constructs a meta prompt including conversation history, user input, and intent."""
@@ -60,6 +67,7 @@ def get_model_response(user_input):
 
         # Extract and clean the AI response
         ai_response = response.text.strip()
+        ai_response = clean_response(ai_response)
 
         # Update conversation history with AI response
         history.append({"role": "assistant", "content": ai_response})
@@ -68,3 +76,8 @@ def get_model_response(user_input):
     except Exception as e:
         print(f"Error generating response: {e}")
         return "Sorry, I couldn't generate a response."
+    
+def clear_history():
+    global history
+    history.clear()
+    
