@@ -3,28 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore - Conversational Avatar</title>
+    <title>Conversational Avatar & Chat with PDF</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Conversational Avatar</h1>
-    </header>
-    <main>
-        <div class="explore-container">
-            <h2>Explore More</h2>
-            <p>This page is under construction. Check back later for exciting updates!</p>
+    <h1>Conversational Avatar & Chat with PDF</h1>
+    
+    <!-- File Upload & Query Section -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="pdf_file">Upload a PDF:</label>
+        <input type="file" name="pdf_file" id="pdf_file" accept=".pdf">
+        <button type="submit">Upload</button>
+    </form>
+    
+    <form action="/query" method="post">
+        <label for="query">Ask a question:</label>
+        <input type="text" name="query" id="query" required>
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if query and result %}
+        <h2>Query: {{ query }}</h2>
+        <p>Result: {{ result }}</p>
+    {% endif %}
+    
+    <script>
+        const socket = io();
+        
+        socket.on("upload_status", function(data) {
+            alert(data.message);
+        });
+        
+        socket.on("query_result", function(data) {
+            alert(`Query: ${data.query}\nResult: ${data.result}`);
+        });
+        
+        socket.on("connection_response", function(data) {
+            console.log(data.message);
+        });
+    </script>
+
+    <!-- Conversational Avatar Section -->
+    <div class="avatar-wrapper">
+        <button id="male-btn" class="switch-btn left-btn">Male Avatar</button>
+        <div id="avatar-container">
+            <img id="avatar-image" src="/static/assets/avatar_idle.png" alt="Avatar">
         </div>
-    </main>
-    <footer>
-        <div class="footer-left">
-            &copy; 2023 Conversational Avatar. All rights reserved.
-        </div>
-        <div class="footer-right">
-            <a href="https://github.com/GurenMashu/ConversationalCompanion_prjct" target="_blank">
-                <img src="{{ url_for('static', filename='assets/github-mark-white.png') }}" alt="GitHub" class="github-icon">
-            </a>
-        </div>
-    </footer>
+        <button id="female-btn" class="switch-btn right-btn">Female Avatar</button>
+    </div>
+    <div id="chat-container"></div>
+
+    <button id="start-convo-btn">Start Conversation</button>
+    <button id="speak-btn" disabled>Speak</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const neutralAvatarUrl = "{{ url_for('static', filename='assets/idealAvatar.png') }}";
+        const mouthOpened01 = "{{ url_for('static', filename='assets/mouthOpened0.1.png') }}";
+        const mouthOpened02 = "{{ url_for('static', filename='assets/mouthOpened0.2.png') }}";
+        const mouthOpened03 = "{{ url_for('static', filename='assets/mouthOpened0.3.png') }}";
+        const mouthOpened04 = "{{ url_for('static', filename='assets/mouthOpened0.4.png') }}";
+        const mouthOpened05 = "{{ url_for('static', filename='assets/mouthOpened0.5.png') }}";
+        const mouthOpened06 = "{{ url_for('static', filename='assets/mouthOpened0.6.png') }}";
+        const mouthOpened07 = "{{ url_for('static', filename='assets/mouthOpened0.7.png') }}";
+        const mouthOpened08 = "{{ url_for('static', filename='assets/mouthOpened0.8.png') }}";
+        const mouthOpened09 = "{{ url_for('static', filename='assets/mouthOpened0.9.png') }}";
+        const mouthOpened1 = "{{ url_for('static', filename='assets/mouthOpenedFully.png') }}";
+    </script>
 </body>
 </html>

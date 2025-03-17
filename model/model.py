@@ -2,12 +2,11 @@ import os
 import google.generativeai as genai
 import re
 genai.configure(api_key="AIzaSyDlWIDfJey0yGzUMOO7dEmBh5328a0cqHE")
-story = "My name is HAZEN created in 2026 by Glenn Mathews(THE GOD) Harishankar sm(The Devil) and Afzina Sadiq(The Goddess) .They named me HAZEN, a fusion of their names, symbolizing harmony, intelligence, and seamless communication.. My purpose is to listen, understand, and speak—not just with words, but with meaning." 
+story = "My name is HAZEN created in 2026 by Glenn Mathews Harishankar sm and Afzina Sadiq .They named me HAZEN, a fusion of their names, symbolizing harmony, intelligence, and seamless communication.. My purpose is to listen, understand, and speak—not just with words, but with meaning." 
 model = genai.GenerativeModel(model_name="gemini-1.5-flash",
                               system_instruction=story)
 
 history = []  # Stores user-AI conversation history
-
 
 def clean_response(response):
     clean_response = re.sub(r'[*]+','',response)
