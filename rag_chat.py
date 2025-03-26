@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger("chromadb").setLevel(logging.WARNING)  # or ERROR
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key="AIzaSyDlWIDfJey0yGzUMOO7dEmBh5328a0cqHE")
 
 chroma_collection=None
 chunks=None
