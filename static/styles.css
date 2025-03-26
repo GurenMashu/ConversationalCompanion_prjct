@@ -334,3 +334,23 @@ header h1 {
 .button-class:hover{
     background-color: #45a049;
 }
+
+/*--------------------for rag chat------------------*/
+#start-rag-convo-btn, #speak-rag-btn {
+    background-color: #00CED1;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px; /* Slightly larger padding */
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 10px rgba(0, 206, 209, 0.3); /* Shadow for buttons */
+}
+
+#start-rag-convo-btn:hover, #speak-rag-btn:hover {
+    background-color: #008080;
+    transform: translateY(-3px); /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
+}

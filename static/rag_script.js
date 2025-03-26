@@ -1,8 +1,6 @@
 const socket = io();
-
-const startConvoBtn = document.getElementById("start-convo-btn");
-
-const speakBtn = document.getElementById("speak-btn");
+const startRagConvoBtn = document.getElementById("start-rag-convo-btn");
+const speakRagBtn = document.getElementById("speak-rag-btn");
 
 const chatContainer = document.getElementById("chat-container");
 const avatarImage = document.getElementById("avatar-image");
@@ -14,25 +12,23 @@ const neutralFemaleAvatar = "static/assets/FemaleAvatarMouthClosed.png"
 let isConversationActive = false;
 let currentAvatar = 'male'; // Track active avatar
 
-
-// Handle Start/End Conversation Button Click
-startConvoBtn.addEventListener("click", () => {
+startRagConvoBtn.addEventListener("click", () => {
     if (!isConversationActive) {
         isConversationActive = true;
-        startConvoBtn.textContent = "End Conversation";
-        speakBtn.disabled = false;
+        startRagConvoBtn.textContent = "End Rag Conversation";
+        speakRagBtn.disabled = false;
         console.log("Conversation started.");
     } else {
         isConversationActive = false;
-        startConvoBtn.textContent = "Start Conversation";
-        speakBtn.disabled = true;
+        startRagConvoBtn.textContent = "Start Rag Conversation";
+        speakRagBtn.disabled = true;
         console.log("Conversation ended.");
 
         // Clear chat history in the UI
         chatContainer.innerHTML = "";
 
         // Clear history on the server side
-        socket.emit("clear_history");
+        socket.emit("clear_rag_history");
 
         // Stop audio playback
         socket.emit("stop_audio");
@@ -42,10 +38,9 @@ startConvoBtn.addEventListener("click", () => {
     }
 });
 
-// Handle Speak Button Click
-speakBtn.addEventListener("click", () => {
+speakRagBtn.addEventListener("click", () => {
     if (isConversationActive) {
-        socket.emit("start_recording");
+        socket.emit("start_rag_recording");
     }
 });
 

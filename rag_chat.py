@@ -110,7 +110,7 @@ def initialize_rag_chroma_pipeline(pdf_path):
         return "Failed to create chroma collection"
     logging.info("Storing the embedding into database...")
     add_to_chroma(chroma_collection, chunks, embeddings)
-    return "RAG pipeline initialized successfully."
+    return "RAG pipeline initialized successfully." , chroma_collection
     
 def rag_pipeline_chroma(query):   
     global chroma_collection, chunks, embeddings

@@ -58,6 +58,16 @@ def handle_clear_history():
     clear_history()
     print("Chat history cleared.")
 
+@socketio.on("clear_rag_history")
+def handle_clear_rag_history():
+    global history
+    history.clear()
+    from model.model import clear_history
+    clear_history()
+    from rag_chat import delete_uploaded_files
+    delete_uploaded_files()
+    print("Rag_Chat history cleared.")    
+
 @socketio.on("stop_audio")
 def handle_stop_audio():
     stop_audio()  # Stop audio playback
@@ -85,13 +95,13 @@ def upload_file():
         socketio.emit("upload_status", {"message":"File uploaded successfully!"})
 
         flash("File uploaded successfully!", "success")
-        initialize_rag_chroma_pipeline(file_path)
+        print(initialize_rag_chroma_pipeline(file_path))
         return redirect(url_for("pdf_chat"))
     else:
         flash("Invalid file type. Only PDFs are allowed", "error")
         return redirect(url_for("pdf_chat"))
     
-@app.route("/query", methods=["POST"])
+'''@app.route("/query", methods=["POST"])
 def query():
     global history_rag
     user_query=request.form.get("query")
@@ -115,7 +125,27 @@ def query():
 
     audio_thread = text_to_speech(result,socketio)
     audio_thread.join()  
-    return render_template("pdf_chat.html", query=user_query, result=result)
+    return render_template("pdf_chat.html", query=user_query, result=result)'''
+
+#####################for rag chat#########################
+@socketio.on("start_rag_recording")
+def handle_start_recording():
+    global history
+    print("Recording started...")
+
+    stop_audio()
+    # Listen to the user's speech
+    user_text = listen_to_speech()
+    print(f"User said: {user_text}")
+
+    result=rag_pipeline_chroma(user_text)
+    history.append({"user": user_text, "ai": result})  # Initialize with empty AI response
+
+    socketio.emit("update_chat", {"user_text": user_text, "ai_text": result, "history": history})
+
+
+    audio_thread = text_to_speech(result,socketio)
+    audio_thread.join()  
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
