@@ -10,7 +10,7 @@ const femaleBtn = document.getElementById("female-btn")
 const neutralMaleAvatar = "static/assets/idealAvatar.png";
 const neutralFemaleAvatar = "static/assets/FemaleAvatarMouthClosed.png"
 let isConversationActive = false;
-let currentAvatar = 'male'; // Track active avatar
+let currentAvatar = 'male';  
 
 startRagConvoBtn.addEventListener("click", () => {
     if (!isConversationActive) {
@@ -24,17 +24,12 @@ startRagConvoBtn.addEventListener("click", () => {
         speakRagBtn.disabled = true;
         console.log("Conversation ended.");
 
-        // Clear chat history in the UI
         chatContainer.innerHTML = "";
 
-        // Clear history on the server side
         socket.emit("clear_rag_history");
 
-        // Stop audio playback
         socket.emit("stop_audio");
-
         updateAvatar()
-
     }
 });
 
@@ -44,11 +39,9 @@ speakRagBtn.addEventListener("click", () => {
     }
 });
 
-// Handle Streaming Updates from Server
 socket.on("update_chat", (data) => {
     updateChatHistory(data.history);
 });
-
 
 maleBtn.addEventListener("click", () => {
     currentAvatar = 'male';
@@ -85,14 +78,12 @@ const mouthFrames2 = [
 
 let frameIndex = 0;
 
-
-// ✅ Preload All Mouth Frames (Avoid Flickering)
+// Preload All Mouth Frames (Avoid Flickering)
 [...mouthFrames, ...mouthFrames2].forEach((src) => {
     const img = new Image();
     img.src = src;
 });
 
-// Handle AI Audio Playback
 socket.on("ai_audio", () => {
     if(mouthAnimationInterval) {
         clearInterval(mouthAnimationInterval);
@@ -112,8 +103,6 @@ socket.on("ai_audio", () => {
     }, 100); // Adjust speed (100ms for smooth movement)
 });
 
-
-// Handle AI Audio Playback End
 socket.on("ai_audio_end", () => {
     if (mouthAnimationInterval) {
         clearInterval(mouthAnimationInterval); // Stop animation
@@ -126,7 +115,6 @@ socket.on("ai_audio_end", () => {
     }, 5);
 });
 
-// Function to update chat history and auto-scroll
 function updateChatHistory(history) {
     const lastEntry = history[history.length - 1]; // Get the latest message
     if (!lastEntry) return; // Avoid errors if history is empty
@@ -155,8 +143,6 @@ function updateChatHistory(history) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-
-// Function to simulate typing effect
 function typeText(element, text, delay = 50) {
     let index = 0;
     element.textContent = "";

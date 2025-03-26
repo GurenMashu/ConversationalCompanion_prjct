@@ -100,34 +100,7 @@ def upload_file():
     else:
         flash("Invalid file type. Only PDFs are allowed", "error")
         return redirect(url_for("pdf_chat"))
-    
-'''@app.route("/query", methods=["POST"])
-def query():
-    global history_rag
-    user_query=request.form.get("query")
-    if not user_query:
-        flash("No query provided!", "error")
-        return redirect(url_for("pdf_chat"))
 
-    uploaded_files=os.listdir(app.config["UPLOAD_FOLDER"])  
-    if not uploaded_files:
-        flash("No PDF uploaded yet!", "error")
-        return redirect(url_for("pdf_chat")) 
-
-    latest_file=uploaded_files[-1]
-    file_path=os.path.join(app.config["UPLOAD_FOLDER"], latest_file)
-
-    result=rag_pipeline_chroma(user_query) 
-
-    history_rag.append({"user": user_query, "ai": result})
-    socketio.emit("update_chat", {"user_text": user_query, "ai_text": result, "history": history})
-    socketio.emit("query_result", {"query":user_query,"result":result})
-
-    audio_thread = text_to_speech(result,socketio)
-    audio_thread.join()  
-    return render_template("pdf_chat.html", query=user_query, result=result)'''
-
-#####################for rag chat#########################
 @socketio.on("start_rag_recording")
 def handle_start_recording():
     global history

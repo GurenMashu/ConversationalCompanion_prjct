@@ -91,7 +91,7 @@ const mouthFrames2 = [
 let frameIndex = 0;
 
 
-// ✅ Preload All Mouth Frames (Avoid Flickering)
+// Preload All Mouth Frames (Avoid Flickering)
 [...mouthFrames, ...mouthFrames2].forEach((src) => {
     const img = new Image();
     img.src = src;

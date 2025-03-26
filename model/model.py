@@ -6,7 +6,7 @@ story = "My name is HAZEN created in 2026 by Glenn Mathews Harishankar sm and Af
 model = genai.GenerativeModel(model_name="gemini-1.5-flash",
                               system_instruction=story)
 
-history = []  # Stores user-AI conversation history
+history = [] 
 
 def clean_response(response):
     clean_response = re.sub(r'[*]+','',response)
