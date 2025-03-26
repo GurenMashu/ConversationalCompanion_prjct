@@ -126,7 +126,7 @@ def rag_pipeline_chroma(query):
     
     context="\n".join(relevant_chunks)
     logging.info("Llm is generating response...")
-    answer=generate_answer(query, context)
+    answer=get_model_response(query, context)
     return answer
 
 def delete_uploaded_files(directory_path="uploads"):

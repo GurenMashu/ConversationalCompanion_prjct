@@ -49,7 +49,7 @@ def detect_intent(user_input):
         return None
 
 
-def get_model_response(user_input):
+def get_model_response(user_input, context=""):
     """Generates a response from the AI model and maintains conversation history."""
     #global history
 
@@ -59,6 +59,7 @@ def get_model_response(user_input):
     # Detect intent and construct prompt
     intent = detect_intent(user_input)
     meta_prompt = construct_meta_prompt(user_input, history=history, intent=intent)
+    meta_prompt+=f"Context: \n{context}\n\n"
 
     try:
         # API call using structured conversation history
