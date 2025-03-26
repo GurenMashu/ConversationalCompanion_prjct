@@ -17,9 +17,11 @@
         <button id="female-btn" class="switch-btn right-btn">Female Avatar</button>
     </div>
     <div id="chat-container"></div>
-
-    <button id="start-convo-btn" >Start Conversation</button>
-    <button id="speak-btn" disabled>Speak</button>
+    <div class="button-container">
+        <button id="start-convo-btn" >Start Conversation</button>
+        <button id="speak-btn" disabled>Speak</button>
+    </div>
+    <a href="/" class="button-class">Home</a>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>

@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
-app.secret_key=os.environ.get("FLASK_SECRET_KEY")
+app.secret_key="d4e507a00b1be6f72068ab53f98aabe0c74776f84a8d8ff4e56984d7b7e820e5"
 if not app.secret_key:
     raise ValueError("No secret key set for Flask application")
 socketio = SocketIO(app)
