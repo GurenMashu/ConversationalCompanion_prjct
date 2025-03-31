@@ -18,6 +18,7 @@ socketio = SocketIO(app)
 
 history = []
 history_rag=[]
+file_path=""
 
 @app.route("/")
 def home():
@@ -64,8 +65,9 @@ def handle_clear_rag_history():
     history.clear()
     from model.model import clear_history
     clear_history()
-    from rag_chat import delete_uploaded_files
+    from rag_chat import delete_uploaded_files, clean_vector_database
     delete_uploaded_files()
+    #clean_vector_database()
     print("Rag_Chat history cleared.")    
 
 @socketio.on("stop_audio")
@@ -79,6 +81,7 @@ def allowed_file(filename):
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
+    global file_path
     if "pdf_file" not in request.files:
         return "No file uploaded!", 400
     

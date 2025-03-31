@@ -14,7 +14,6 @@ logging.getLogger("chromadb").setLevel(logging.WARNING)  # or ERROR
 load_dotenv()
 genai.configure(api_key="AIzaSyDlWIDfJey0yGzUMOO7dEmBh5328a0cqHE")
 
-chroma_collection=None
 chunks=None
 embeddings=None
 
@@ -63,7 +62,7 @@ def generate_answer(query, Context):
     
 def create_chroma_client(collection_name="my_collection"):
     try:
-        client=chromadb.Client()
+        client=chromadb.PersistentClient(path="./chroma_db")
         collection=client.get_or_create_collection(name=collection_name)
         return collection
     except Exception as e:
@@ -92,6 +91,7 @@ def retrieve_from_chroma(collection, query_embedding, top_k=3):
     
 def initialize_rag_chroma_pipeline(pdf_path):
     global chroma_collection, embeddings, chunks
+
     logging.info("Extracting text from uploade pdf...")
     text=extract_text_from_pdf(pdf_path)
     if text is None:
@@ -110,7 +110,8 @@ def initialize_rag_chroma_pipeline(pdf_path):
         return "Failed to create chroma collection"
     logging.info("Storing the embedding into database...")
     add_to_chroma(chroma_collection, chunks, embeddings)
-    return "RAG pipeline initialized successfully." , chroma_collection
+    print("Total documents in collection:", chroma_collection.count())
+    return "RAG pipeline initialized successfully." 
     
 def rag_pipeline_chroma(query):   
     global chroma_collection, chunks, embeddings
@@ -134,6 +135,10 @@ def delete_uploaded_files(directory_path="uploads"):
         file_path=os.path.join(directory_path, file)
         if os.path.isfile(file_path):
             os.remove(file_path)
+
+#def clean_vector_database():
+#    chroma_collection.delete(where={})
+#    logging.info("Chroma collection cleaned (documents removed)")
 
 if __name__=="__main__":
     pdf_path=r"C:\Users\GLENN\OneDrive\Documents\S6 Notes\NLP\nlp1.pdf"
