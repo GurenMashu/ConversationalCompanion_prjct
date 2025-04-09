@@ -213,22 +213,22 @@ header h1 {
     transition: opacity 0.3s ease;
 }
 
-
 #chat-container {
-    width: 450px; /* Slightly wider */
-    height: 250px; /* Taller for more messages */
+    width: 450px;
+    height: 250px;
     background-color: #001F3F; 
-    border-radius: 20px; /* More rounded corners */
-    padding: 20px; /* More padding */
-    box-shadow: 0 8px 20px rgba(0, 206, 209, 0.4); /* Deeper shadow */
-    overflow-y: auto; /* Enable scrolling */
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 206, 209, 0.4);
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Increased gap between messages */
+    gap: 15px;
     margin-bottom: 20px;
-    border: 2px solid rgba(0, 206, 209, 0.3); /* Subtle border */
-    backdrop-filter: blur(5px); /* Frosted glass effect */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    border: 2px solid rgba(0, 206, 209, 0.3);
+    backdrop-filter: blur(5px);
+    scroll-behavior: smooth;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #chat-container {
@@ -423,9 +423,40 @@ header h1 {
     width: 450px; /* Adjust width if needed */
     height: 250px;
     background-color: #001f3f;
-    border-radius: 12px;
+    border: 2px solid rgba(0, 206, 209, 0.3); /* Subtle border */
+    border-radius: 20px;
+    padding: 20px; /* More padding */
+    gap: 15px; /* Increased gap between messages */
+    flex-direction: column;
     box-shadow: 0 0 15px rgba(0, 206, 209, 0.7);
     margin-left: 270px;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    overflow-y: auto; /* Enable scrolling */
+}
+
+#chat-container1:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 12px 25px rgba(0, 206, 209, 0.5); /* Enhanced shadow on hover */
+}
+
+/* Scrollbar styling */
+#chat-container1::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+#chat-container1::-webkit-scrollbar-track {
+    background: rgba(0, 206, 209, 0.1); /* Track color */
+    border-radius: 10px;
+}
+
+#chat-container1::-webkit-scrollbar-thumb {
+    background: rgba(0, 206, 209, 0.5); /* Thumb color */
+    border-radius: 10px;
+}
+
+#chat-container1::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 206, 209, 0.8); /* Thumb color on hover */
 }
 
 .upload-form {
@@ -468,4 +499,3 @@ header h1 {
     transform: translateY(-3px); /* Slight lift on hover */
     box-shadow: 0 6px 15px rgba(0, 206, 209, 0.5); 
 }
-
