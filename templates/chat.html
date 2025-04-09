@@ -12,30 +12,28 @@
     <div class="avatar-wrapper">
         <button id="male-btn" class="switch-btn left-btn">Male Avatar</button>
         <div id="avatar-container">
-            <img id="avatar-image" src="/static/assets/avatar_idle.png" alt="Avatar">
+            <video id="avatar-video" loop playsinline></video>
         </div>
         <button id="female-btn" class="switch-btn right-btn">Female Avatar</button>
     </div>
+
     <div id="chat-container"></div>
+
     <div class="button-container">
         <button id="start-convo-btn" >Start Conversation</button>
         <button id="speak-btn" disabled>Speak</button>
     </div>
     <a href="/" class="button-class">Home</a>
+
+     <!-- Store video sources as data attributes -->
+     <div id="avatar-sources"
+     data-male-video="{{ url_for('static', filename='assets/talkingavatar.mp4') }}"
+     data-idle-male-video="{{ url_for('static', filename='assets/idleavatar.mp4') }}"
+     data-female-video="{{ url_for('static', filename='assets/talkingavatarfemale.mp4') }}"
+     data-idle-female-video="{{ url_for('static', filename='assets/idleavatarfemale.mp4') }}">
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script>
-        const neutralAvatarUrl = "{{ url_for('static', filename='assets/idealAvatar.png') }}";
-        const mouthOpened01 = "{{ url_for('static', filename='assets/mouthOpened0.1.png') }}";
-        const mouthOpened02 = "{{ url_for('static', filename='assets/mouthOpened0.2.png') }}";
-        const mouthOpened03 = "{{ url_for('static', filename='assets/mouthOpened0.3.png') }}";
-        const mouthOpened04 = "{{ url_for('static', filename='assets/mouthOpened0.4.png') }}";
-        const mouthOpened05 = "{{ url_for('static', filename='assets/mouthOpened0.5.png') }}";
-        const mouthOpened06 = "{{ url_for('static', filename='assets/mouthOpened0.6.png') }}";
-        const mouthOpened07 = "{{ url_for('static', filename='assets/mouthOpened0.7.png') }}";
-        const mouthOpened08 = "{{ url_for('static', filename='assets/mouthOpened0.8.png') }}";
-        const mouthOpened09 = "{{ url_for('static', filename='assets/mouthOpened0.9.png') }}";
-        const mouthOpened1 = "{{ url_for('static', filename='assets/mouthOpenedFully.png') }}";
-    </script>
 </body>
 </html>

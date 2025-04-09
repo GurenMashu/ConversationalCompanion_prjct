@@ -141,7 +141,7 @@ def delete_uploaded_files(directory_path="uploads"):
 #    logging.info("Chroma collection cleaned (documents removed)")
 
 if __name__=="__main__":
-    pdf_path=r"C:\Users\GLENN\OneDrive\Documents\S6 Notes\NLP\nlp1.pdf"
+    pdf_path=r"C:\Users\user\Desktop\nlp1"
     init_result=initialize_rag_chroma_pipeline(pdf_path)
     print(init_result)
 

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_socketio import SocketIO
 from werkzeug.utils import secure_filename
 from stt_tts.stt import listen_to_speech
-from stt_tts.tts import text_to_speech, stop_audio  # Import the new functions
+from stt_tts.tts import text_to_speech, stop_audio 
 from model.model import get_model_response
 from rag_chat import rag_pipeline_chroma, initialize_rag_chroma_pipeline
 import time
