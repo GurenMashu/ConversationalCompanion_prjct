@@ -65,7 +65,7 @@ def handle_clear_rag_history():
     history.clear()
     from model.model import clear_history
     clear_history()
-    from rag_chat import delete_uploaded_files, clean_vector_database
+    from rag_chat import delete_uploaded_files#, clean_vector_database
     delete_uploaded_files()
     #clean_vector_database()
     print("Rag_Chat history cleared.")    
