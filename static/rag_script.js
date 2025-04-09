@@ -2,7 +2,7 @@ const socket = io();
 const startRagConvoBtn = document.getElementById("start-rag-convo-btn");
 const speakRagBtn = document.getElementById("speak-rag-btn");
 
-const chatContainer = document.getElementById("chat-container");
+const chatContainer = document.getElementById("chat-container1");
 const avatarVideo = document.getElementById("avatar-video");
 const maleBtn = document.getElementById("male-btn")
 const femaleBtn = document.getElementById("female-btn")
@@ -45,6 +45,18 @@ speakRagBtn.addEventListener("click", () => {
 
 socket.on("update_chat", (data) => {
     updateChatHistory(data.history);
+});
+
+// Handle AI Audio Playback Start
+socket.on("ai_audio", () => {
+    console.log("AI audio started");
+    startAvatarAnimation();
+});
+
+// Handle AI Audio Playback End
+socket.on("ai_audio_end", () => {
+    console.log("AI audio ended");
+    stopAvatarAnimation();
 });
 
 maleBtn.addEventListener("click", () => {
